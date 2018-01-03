@@ -41,7 +41,7 @@ for x in range(2,354):
     client_id = cursor.fetchone()
     print(client_id)
     if(client_id!=None):
-        cursor.execute('INSERT INTO credits (client_id,type,status,amount,term,periodicity,interestRate,arrearRate,realRate,creditStart,CapitalToPay,InterestsToPay,ArrearToPay,applications_id,created_at,updated_at) values (\"'+str(client_id[0])+'\",\"'+str(tipo)+'\","1",\"'+str(amount)+'\",\"'+str(term)+'\",\"'+str(periodicity)+'\",\"'+str(interestRate)+'\",\"'+str(arrearRate)+'\","0",\"'+str(creditStart)+'\",\"'+str(CapitalToPay)+'\",\"'+str(InterestsToPay)+'\",\"'+str(ArrearToPay)+'\","0",\"'+str(creditStart)+'\",\"'+str(creditStart)+'\")' )
+        cursor.execute('INSERT INTO credits (client_id,type,status,amount,term,periodicity,interestRate,arrearRate,realRate,creditStart,CapitalToPay,InterestsToPay,ArrearToPay,applications_id,created_at,updated_at,FinancialProduct_id) values (\"'+str(client_id[0])+'\",\"'+str(tipo)+'\","1",\"'+str(amount)+'\",\"'+str(term)+'\",\"'+str(periodicity)+'\",\"'+str(interestRate)+'\",\"'+str(arrearRate)+'\","0",\"'+str(creditStart)+'\",\"'+str(CapitalToPay)+'\",\"'+str(InterestsToPay)+'\",\"'+str(ArrearToPay)+'\","0",\"'+str(creditStart)+'\",\"'+str(creditStart)+'\","0")' )
         conn.commit()
 
 

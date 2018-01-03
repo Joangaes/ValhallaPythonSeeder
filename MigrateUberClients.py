@@ -61,12 +61,41 @@ for x in range(1,10):
     bank = str(ws.cell(row=37,column=x).value)
     cardNumber = str(ws.cell(row=38,column=x).value)
     clabe = str(ws.cell(row=39,column=x).value)
+    CapitalToPay = str(ws.cell(row=40,column=x).value)
+    InterestsToPay = str(ws.cell(row=41,column=x).value)
+    interestRate = str(ws.cell(row=42,column=x).value)
+    amount = float(CapitalToPay) + float(InterestsToPay)
+    arrearRate = interestRate
+    periodicity = 1
+    term =1
+    creditStart = str(ws.cell(row=43,column=x).value)
+    ArrearToPay = 0
+
+    print('Nombre:' + str(name))
 
 
     cursor.execute('INSERT INTO clients (name,curp,rfc,birthDay,address,phone,cellphone,bank,clabe,created_at,updated_at,marritalStatus,educationLevel,dependendants,livingStatus,credit,creditCard,lastDigits,business,businessField,businessRFC,businessAddress,businessFundation,brand,businessPhone,businessCellphone,webSite,partnersNumber,employeesNumbers,isPartner,sellsType,operationDays,ref1Name,ref1Contact,ref1Phone,ref2Name,ref2Contact,ref2Phone,ref3Name,ref3Contact,ref3Phone,cardNumber) values (\"'+name+'\",\"'+curp+'\",\"'+rfc+'\",\"'+birthdate+'\",\"'+address+'\",\"'+cellphone+'\",\"'+cellphone+'\",\"'+bank+'\",\"'+clabe+'\","2017-12-12","2017-12-12","1",\"'+educationLevel+'\",\"'+dependendants+'\",\"'+livingStatus+'\",\"'+credit+'\",\"'+creditCard+'\",\"'+lastDigits+'\",\"'+business+'\",\"'+businessField+'\",\"'+businessRFC+'\",\"'+businessAddress+'\",\"'+businessFoundation+'\","1","1","1","1","1","1","1","1","1","1","1","1","1","1","3","1","1","3","151515151561665")')
     conn.commit()
 
-    #Create CreditAccount and PaymentAccounts
+    cursor.execute('SELECT LAST_INSERT_ID()')
+    client_id = cursor.fetchone()
+
+    #Create Credit for CreditAccounts
+    cursor.execute('INSERT INTO credits (client_id,type,status,amount,term,periodicity,interestRate,arrearRate,realRate,creditStart,CapitalToPay,InterestsToPay,ArrearToPay,applications_id,created_at,updated_at,FinancialProduct_id) values (\"'+str(client_id[0])+'\","3","1",\"'+str(amount)+'\",\"'+str(term)+'\",\"'+str(periodicity)+'\",\"'+str(interestRate)+'\",\"'+str(arrearRate)+'\","0",\"'+str(creditStart)+'\",\"'+str(CapitalToPay)+'\",\"'+str(InterestsToPay)+'\",\"'+str(ArrearToPay)+'\","0",\"'+str(creditStart)+'\",\"'+str(creditStart)+'\","0")' )
+    conn.commit()
+
+    cursor.execute('SELECT LAST_INSERT_ID()')
+    credit_id = cursor.fetchone()
+
+    #Create Credit Accounts and Payment Accounts
+
+    cursor.execute('INSERT INTO paymentaccounts (created_at,updated_at,client_id,status,type,id_unico) values ("2017-12-12","2017-12-12",\"'+str(client_id[0])+'\","1","1",\"'+str(id_unico)+'\")')
+    conn.commit()
+
+    cursor.execute('SELECT LAST_INSERT_ID()')
+    paymentaccounts = cursor.fetchone()
+
+    cursor.execute('INSERT INTO creditaccounts (created_at,updated_at,credit_id,PaymentAccounts_id) values ("2017-12-12","2017-12-12",\"'+str(credit_id[0])+'\",\"'+str(paymentaccounts[0])+'\")')
 
 #row = cursor.fetchone()
 
